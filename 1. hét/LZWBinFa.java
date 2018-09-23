@@ -1,4 +1,5 @@
 
+
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -46,7 +47,7 @@ public class LZWBinFa extends HttpServlet{
     
     valami(gyoker);
     
-buff.append("111111111111");
+//buff.append("111111111111");
   }
 
  
@@ -103,7 +104,7 @@ buff.append("111111111111");
   public void valami(Csomopont elem) {
 	
    
-	szoveg[30]="3333333333333333333";
+	//szoveg[30]="3333333333333333333";
     if (elem != null) {
       ++melyseg;
       valami(elem.egyesGyermek());
@@ -120,8 +121,9 @@ buff.append("111111111111");
       szoveg[sor]+=")";
 
       sor+=1;
-      --melyseg;
+      
 	valami(elem.nullasGyermek());
+	--melyseg;
     }
 	
   }
@@ -213,17 +215,23 @@ PrintWriter out = response.getWriter();
 
     
     String inFile ="beFile";
-    
+    String url = request.getParameter("url");
     try {
 
       
       LZWBinFa binFa = new LZWBinFa();
 
       
-	byte[] b={'0','1','0','0','0','1'};
-        for (int i = 0; i < 6; ++i) {
+	//byte[] b={'0','1','0','0','0','1'};
+	int h=url.length();
+	//char[] c=new char[h];
+	//c=list(url);
+	
+        for (int i = 0; i < h; ++i) {
           
-	if(b[i]=='0') binFa.egyBitFeldolg('1');
+	//if(c[i]=='1') binFa.egyBitFeldolg('1');
+	//else binFa.egyBitFeldolg('0');
+	if(url.charAt(i)=='1') binFa.egyBitFeldolg('1');
 	else binFa.egyBitFeldolg('0');
         }
 
@@ -235,7 +243,7 @@ binFa.lement();
       out.println("<p>depth = " + binFa.getMelyseg()+"</p>");
       out.println("<p>mean = " + binFa.getAtlag()+"</p>");
       out.println("<p>var = " + binFa.getSzoras()+"</p>");
-      
+      out.println("<p>url = " + url +"</p>");
       
 	szoveg[10]="asfawasd";
 	for(int i=0;i<binFa.sor;i++){
